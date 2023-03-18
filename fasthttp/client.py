@@ -53,7 +53,7 @@ class HttpResponse_http_client(object):
         self.conn_sqlite = conn_sqlite if conn_sqlite else None
         self.url_base64 = url_base64
         self.c = c if c else None
-        self._cookies = cookies
+        self._cookies = cookies if cookies else {}
         self.method = method
         self.payload = payload if payload else None
 
@@ -192,14 +192,8 @@ class req:
 
     @classmethod
     def headers(cls,url):
-        parts = urlparse(url)
-        try:
-            host = parts.netloc.split(":")[0]
-        except:
-            host = parts.netloc
         if url.startswith('https://'):
-            h = {'Host': host, 
-            'Connection': 'keep-alive', 
+            h = {'Connection': 'keep-alive', 
             'sec-ch-ua': '"Microsoft Edge";v="111", "Not(A:Brand";v="8", "Chromium";v="111"', 
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
@@ -214,8 +208,7 @@ class req:
             'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'
             }
         else:
-            h = {'Host': host, 
-            'Connection': 'keep-alive', 
+            h = {'Connection': 'keep-alive', 
             'sec-ch-ua': '"Microsoft Edge";v="111", "Not(A:Brand";v="8", "Chromium";v="111"', 
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
@@ -622,7 +615,8 @@ class req:
         c = None 
         conn_sqlite  = None
         cache_time = None     
-        res_http = HttpResponse_http_client(r, url, conn_sqlite, c, h, cache_time,url_base64,cookie_dict,'head',None)                                          
+        res_http = HttpResponse_http_client(r, url, conn_sqlite, c, h, cache_time,url_base64,cookie_dict,'head',None)
+        return res_http                                         
 
 
 
