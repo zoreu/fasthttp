@@ -33,6 +33,12 @@ r = req.get('https://httpbin.org/ip',cache_time=200)
 print(r.text)
 ```
 
+## limpando cache
+```python
+# para apagar o cache use a função clear_cache
+req.clear_cache()
+```
+
 ## proxy
 ```python
 # observação: o proxy é usado tanto pra site http como pra site https
