@@ -1,6 +1,6 @@
 # fasthttp
 
-fasthttp é uma ferramenta de acesso a sites usando http.client do python de baixo nivel e com maior privacidade e velocidade, isso por que http.client usa socket por baixo que é escrito em c e pelo fato de http.client dificultar analises de programas como fiddler e wireshark.
+fasthttp é uma ferramenta de acesso a sites usando http.client do python de baixo nivel e com maior privacidade e velocidade, isso por que http.client e suas dependencias são feitas em c e pelo fato de http.client dificultar analises de programas como fiddler e wireshark.
 
 por padrão o metodo get e post possui redirecionamento ativado
 
