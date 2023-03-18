@@ -1,4 +1,4 @@
-# Installation
+# Instalação
 
 ```bash
 pip install git+https://github.com/zoreu/fasthttp
