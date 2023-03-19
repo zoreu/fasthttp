@@ -830,6 +830,7 @@ class req:
         if not cache_time:
             conn_sqlite = None
             c = None
+        url = new_location
         res_http = HttpResponse_http_client(r, url, conn_sqlite, c, h, cache_time, url_base64, cookie_dict, 'get', None)
         return res_http
 
@@ -1045,6 +1046,7 @@ class req:
                 pass
         if not cache_time:
             conn_sqlite = None
-            c = None            
+            c = None
+        url = new_location           
         res_http = HttpResponse_http_client(r, url, conn_sqlite, c, h, cache_time, url_base64, cookie_dict, 'post', payload)
         return res_http                       
