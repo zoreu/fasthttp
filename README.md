@@ -1,5 +1,7 @@
 # fasthttp
 
+versão atual: 0.0.3
+
 fasthttp é uma ferramenta de acesso a sites usando http.client do python de baixo nivel e com maior privacidade e velocidade, isso por que http.client e suas dependencias são feitas em c e pelo fato de http.client dificultar analises de programas como fiddler e wireshark.
 
 por padrão o metodo get e post possui redirecionamento ativado
@@ -35,6 +37,13 @@ print(r.status_code)
 ## get
 ```python
 r = req.get('https://httpbin.org/ip')
+print(r.text)
+```
+
+## replace headers
+```python
+# para usar apenas os headers que você especificar use o modo replace_headers
+r = req.get('https://httpbin.org/ip', headers={'User-Agent': 'FastHttp'}, replace_headers=True)
 print(r.text)
 ```
 

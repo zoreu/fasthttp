@@ -231,7 +231,7 @@ class req:
             except:
                 pass
     @classmethod
-    def __redirect_get(cls,url,headers={},cookies={},timeout=None,proxy=None,verify=True):
+    def __redirect_get(cls,url,headers={},cookies={},timeout=None,proxy=None,verify=True,replace_headers=False):
         if not url.startswith('https://'):
             if not url.startswith('http://'):
                 raise ValueError('Url: Invalid protocol. Only http and https are supported.')
@@ -239,7 +239,10 @@ class req:
             if not proxy.startswith('https://'):
                 if not proxy.startswith('http://'):
                     raise ValueError('Proxy: Invalid protocol. Only http and https are supported.')
-        h = cls.headers(url)
+        if replace_headers:
+            h = {}
+        else:
+            h = cls.headers(url)
         if headers:
             h.update(headers)
         parts = urlparse(url)
@@ -352,7 +355,7 @@ class req:
             if new_location:
                 if not new_location.startswith('http'):
                     new_location = '%s://%s%s'%(scheme_url,netloc_url,new_location)
-                r, new_location = cls.__redirect_get(url=new_location,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify)
+                r, new_location = cls.__redirect_get(url=new_location,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify,replace_headers=replace_headers)
             else:
                 new_location = url
         else:
@@ -360,7 +363,7 @@ class req:
         return r,new_location
 
     @classmethod
-    def __redirect_post(cls,url,data={},json={},headers={},cookies={},timeout=None,proxy=None,verify=True):
+    def __redirect_post(cls,url,data={},json={},headers={},cookies={},timeout=None,proxy=None,verify=True,replace_headers=False):
         if not url.startswith('https://'):
             if not url.startswith('http://'):
                 raise ValueError('Url: Invalid protocol. Only http and https are supported.')
@@ -368,7 +371,10 @@ class req:
             if not proxy.startswith('https://'):
                 if not proxy.startswith('http://'):
                     raise ValueError('Proxy: Invalid protocol. Only http and https are supported.')
-        h = cls.headers(url)
+        if replace_headers:
+            h = {}
+        else:
+            h = cls.headers(url)
         if headers:
             h.update(headers)
         parts = urlparse(url)
@@ -493,7 +499,7 @@ class req:
             if new_location:
                 if not new_location.startswith('http'):
                     new_location = '%s://%s%s'%(scheme_url,netloc_url,new_location)
-                r, new_location = cls.__redirect_post(url=new_location,data=data,json=json,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify)
+                r, new_location = cls.__redirect_post(url=new_location,data=data,json=json,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify,replace_headers=replace_headers)
             else:
                 new_location = url
         else:
@@ -501,7 +507,7 @@ class req:
         return r,new_location                            
 
     @classmethod
-    def head(cls,url,headers={},cookies={},timeout=None,proxy=None,verify=False):
+    def head(cls,url,headers={},cookies={},timeout=None,proxy=None,verify=False,replace_headers=False):
         if not url.startswith('https://'):
             if not url.startswith('http://'):
                 raise ValueError('Url: Invalid protocol. Only http and https are supported.')
@@ -509,7 +515,10 @@ class req:
             if not proxy.startswith('https://'):
                 if not proxy.startswith('http://'):
                     raise ValueError('Proxy: Invalid protocol. Only http and https are supported.')
-        h = cls.headers(url)
+        if replace_headers:
+            h = {}
+        else:
+            h = cls.headers(url)
         if headers:
             h.update(headers)
         parts = urlparse(url)
@@ -621,7 +630,7 @@ class req:
 
 
     @classmethod
-    def get(cls,url,headers={},cookies={},timeout=None,cache_time=None,proxy=None,verify=True,gzip_encoding=True):
+    def get(cls,url,headers={},cookies={},timeout=None,cache_time=None,proxy=None,verify=True,gzip_encoding=True,replace_headers=False):
         global sleep
         if not url.startswith('https://'):
             if not url.startswith('http://'):
@@ -630,8 +639,11 @@ class req:
             if not proxy.startswith('https://'):
                 if not proxy.startswith('http://'):
                     raise ValueError('Proxy: Invalid protocol. Only http and https are supported.')
-        h = cls.headers(url)
-        if not gzip_encoding:
+        if replace_headers:
+            h = {}
+        else:
+            h = cls.headers(url)
+        if not gzip_encoding and not replace_headers:
             h.pop('Accept-Encoding')
         if headers:
             h.update(headers)
@@ -800,7 +812,7 @@ class req:
             if new_location:
                 if not new_location.startswith('http'):
                     new_location = '%s://%s%s'%(scheme_url,netloc_url,new_location)
-                r, new_location = cls.__redirect_get(url=new_location,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify)
+                r, new_location = cls.__redirect_get(url=new_location,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify,replace_headers=replace_headers)
             else:
                 new_location = url
         else:
@@ -822,7 +834,7 @@ class req:
         return res_http
 
     @classmethod
-    def post(cls,url,data={},json={},headers={},cookies={},timeout=None,cache_time=None,proxy=None,verify=True,gzip_encoding=True):
+    def post(cls,url,data={},json={},headers={},cookies={},timeout=None,cache_time=None,proxy=None,verify=True,gzip_encoding=True,replace_headers=False):
         global sleep
         if not url.startswith('https://'):
             if not url.startswith('http://'):
@@ -831,8 +843,11 @@ class req:
             if not proxy.startswith('https://'):
                 if not proxy.startswith('http://'):
                     raise ValueError('Proxy: Invalid protocol. Only http and https are supported.')
-        h = cls.headers(url)
-        if not gzip_encoding:
+        if replace_headers:
+            h = {}
+        else:
+            h = cls.headers(url)
+        if not gzip_encoding and not replace_headers:
             h.pop('Accept-Encoding')        
         if headers:
             h.update(headers)
@@ -1013,7 +1028,7 @@ class req:
             if new_location:
                 if not new_location.startswith('http'):
                     new_location = '%s://%s%s'%(scheme_url,netloc_url,new_location)
-                r, new_location = cls.__redirect_post(url=new_location,data=data,json=json,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify)
+                r, new_location = cls.__redirect_post(url=new_location,data=data,json=json,cookies=cookie_redirect,headers=h,timeout=timeout,proxy=proxy,verify=verify,replace_headers=replace_headers)
             else:
                 new_location = url
         else:
