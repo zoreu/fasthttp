@@ -164,7 +164,11 @@ class HttpResponse_http_client(object):
                     self.c.execute("REPLACE INTO cache_post (url, payload, content, status_code, timestamp) VALUES (?, ?, ?, ?, ?)", (self.url_base64, self.payload, content_decode, self.r.status, timestamp))
                 self.conn_sqlite.commit()
         self.r.close()
-        return content_json        
+        return content_json
+
+    def close(self):
+        self.r.close()
+
 
 
 
