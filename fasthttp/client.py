@@ -63,7 +63,21 @@ class HttpResponse_http_client(object):
     
     @_Property
     def cookies(self):
-        return self._cookies   
+        return self._cookies
+
+    @_Property
+    def headers(self):
+        response = self.r
+        headers = {}
+        try:
+            headers_list = response.getheaders()
+            if headers_list:
+                for header in headers_list:
+                    key, value = header
+                    headers[key]=value
+        except:
+            pass
+        return headers      
 
     @_Property
     def content(self):

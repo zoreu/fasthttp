@@ -1,6 +1,6 @@
 # fasthttp
 
-versão atual: 0.0.5
+versão atual: 0.0.6
 
 fasthttp é uma ferramenta de acesso a sites usando http.client do python onde uma parte é feita em c para da velocidade, alem disso tem o fato de http.client dificultar analises de programas como fiddler e wireshark.
 
