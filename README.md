@@ -50,7 +50,7 @@ print(r.text)
 ## modo cache
 ```python
 # cache com 300 segundos, onde a cada 300 segundos é renovado o cache
-r = req.get('https://httpbin.org/ip',cache_time=200)
+r = req.get('https://httpbin.org/ip',cache_time=300)
 print(r.text)
 ```
 
